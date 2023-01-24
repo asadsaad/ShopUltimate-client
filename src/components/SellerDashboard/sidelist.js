@@ -46,6 +46,7 @@ import OrderDetails from "./orders/sellerorderdetails";
 import Stats from "./stats";
 import Payouts from "./payments/payouts";
 import Payments from "./payments/payments";
+import { logout } from "../../redux/actions/authactions";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -95,7 +96,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function SideList({ open, setOpen }) {
+  const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.profile);
+  const user = useSelector((state) => state.auth?.user);
+
   const [openl, setOpenl] = React.useState(false);
   const [openp, setOpenp] = React.useState(false);
   const [openo, setOpeno] = React.useState(false);
@@ -313,12 +317,14 @@ export default function SideList({ open, setOpen }) {
             </ListItemButton>
           </Link>
 
-          <ListItemButton>
-            <ListItemIcon>
-              <PermIdentity />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItemButton>
+          <Link to="/settings/profile">
+            <ListItemButton>
+              <ListItemIcon>
+                <PermIdentity />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItemButton>
+          </Link>
         </List>
         <Box
           sx={{
@@ -332,13 +338,20 @@ export default function SideList({ open, setOpen }) {
             src={profile?.image}
             sx={{ width: 100, height: 100, alignSelf: "center" }}
           ></Avatar>
-          <Typography sx={{ fontWeight: "bold", mt: 1, mb: 1 }}>
-            Jon Doe
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              mt: 1,
+              mb: 1,
+              textTransform: "capitalize",
+            }}
+          >
+            {user?.username}
           </Typography>
           <Box>
             <Tooltip title="Logout">
               <IconButton>
-                <Logout />
+                <Logout onClick={() => dispatch(logout())} />
               </IconButton>
             </Tooltip>
           </Box>

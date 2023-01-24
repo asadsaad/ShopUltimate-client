@@ -105,8 +105,8 @@ export const login = (formData) => async (dispatch) => {
       "https://shopulimate-api.onrender.com/user/login",
       formData
     );
-    console.log(res.data.token);
     localStorage.setItem("token", res.data.token);
+    window.location.href = "/";
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -215,7 +215,10 @@ export const clearalert = () => {
 // Logout
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("token");
+  window.location.href = "/";
+
   dispatch({ type: LOGOUT });
+
   dispatch({
     type: IN_PROGRESS,
     payload: false,

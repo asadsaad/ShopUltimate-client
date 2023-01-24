@@ -9,6 +9,7 @@ import {
   SET_ALERT,
   ORDER_COMPLETE,
   GET_ALL_ORDERS,
+  OrderActionSuccess,
 } from "../types";
 import axios from "axios";
 import { setAlert } from "./alertactions";
@@ -107,8 +108,10 @@ export const getsingleorder = (id) => async (dispatch) => {
       type: GET_SINGLE_ORDER,
       payload: res.data?.order,
     });
+    dispatch({ type: OrderActionSuccess });
   } catch (error) {
     console.log(error);
+    dispatch({ type: OrderActionFailed });
   }
 };
 
@@ -126,9 +129,13 @@ export const updateorder = (formData, id, navigate) => async (dispatch) => {
       type: UPDATE_ORDER,
       payload: res.data,
     });
-    dispatch(setAlert("Order Created Successfully", "info"));
+    dispatch(setAlert("Order Updated Successfully", "info"));
+    dispatch({ type: OrderActionSuccess });
+
     navigate("/dashboard/my-orders");
   } catch (error) {
+    dispatch({ type: OrderActionAttempt });
+
     console.log(error);
   }
 };
@@ -145,7 +152,7 @@ export const ordercomplete = (id, navigate) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(setAlert("Order Completed", "success"));
-    navigate("/my-orders");
+    navigate("/settings/orders");
   } catch (error) {
     console.log(error);
   }

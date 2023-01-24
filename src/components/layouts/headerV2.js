@@ -160,7 +160,6 @@ function AuthHeader() {
             {auth?.user?.role == "seller" ? (
               <Link to="/dashboard">
                 <Button
-                  onClick={handlesubmit}
                   sx={{
                     background: "rgb(0,159,127)",
                     color: "white",

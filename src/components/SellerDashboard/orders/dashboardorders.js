@@ -49,6 +49,7 @@ export default function Orders() {
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.s_orders);
+  const loading = useSelector((state) => state.order.loading);
 
   const auth = useSelector((state) => state.auth);
   useEffect(() => {
@@ -296,6 +297,7 @@ export default function Orders() {
           experimentalFeatures={{ newEditingApi: true }}
           components={{ Toolbar: GridToolbar }}
           paginationMode
+          loading={loading}
 
           // loading={isloading}
         />
