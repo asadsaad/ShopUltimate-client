@@ -235,7 +235,6 @@ export default function Addproduct(props) {
             {`${store && store.catagery} > ${catagery ? catagery : ""}`}
           </A>
         )} */}
-
         {/* <TextField
           variant="outlined"
           fullWidth
@@ -279,34 +278,32 @@ export default function Addproduct(props) {
           )}
         />
         <InputLabel sx={{ color: "#333" }}>Brand</InputLabel>
-        <Autocomplete
+        {/* <Autocomplete
           id="free-solo-demo"
           freeSolo={true}
           options={brands && brands}
           getOptionLabel={(option) => option.name}
-          onChange={(event, value) => setbrand(value?.name)}
+          onChange={(event, value) => setbrand(value)}
           renderInput={(params) => (
             <TextField
               {...params}
               size="small"
               placeholder="Select Product Brand"
             />
-          )}
+          )} */}
+        {/* /> */}
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          style={{ marginBottom: "1em" }}
+          type="text"
+          placeholder="Brand...."
+          value={brand}
+          onChange={(e) => setbrand(e.target.value)}
+          name="brand"
         />
-
-        {/* <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            style={{ marginBottom: "1em" }}
-            type="text"
-            placeholder="Brand...."
-            value={brand}
-            onChange={(e) => setbrand(e.target.value)}
-            name="brand"
-          /> */}
         <InputLabel sx={{ color: "#333" }}>Price</InputLabel>
-
         <TextField
           variant="outlined"
           fullWidth
@@ -321,7 +318,6 @@ export default function Addproduct(props) {
         <InputLabel sx={{ color: "#333" }}>
           Discount (Percentage) (Optional)
         </InputLabel>
-
         <TextField
           variant="outlined"
           fullWidth
@@ -334,7 +330,6 @@ export default function Addproduct(props) {
           name="discount"
         />
         <InputLabel sx={{ color: "#333" }}>Avalaible Stock</InputLabel>
-
         <TextField
           variant="outlined"
           fullWidth
@@ -346,7 +341,6 @@ export default function Addproduct(props) {
           onChange={(e) => setinstock(e.target.value)}
           name="instock"
         />
-
         <Typography
           component="h5"
           variant="h5"
@@ -398,7 +392,6 @@ export default function Addproduct(props) {
           setproductimages={setImages}
         />
         <Imagelist />
-
         <Button
           variant="contained"
           color="success"

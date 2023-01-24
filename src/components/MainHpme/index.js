@@ -36,8 +36,9 @@ export default function Main() {
     }
   }, []);
 
-  const bgdata = data.find((d) => d.name.toLocaleLowerCase() == group?.name.toLocaleLowerCase());
-  console.log(group?.name,data.map((d) => d.name));
+  const bgdata = data.find(
+    (d) => d.name.toLocaleLowerCase() == group?.name.toLocaleLowerCase()
+  );
 
   return (
     <>
@@ -49,9 +50,11 @@ export default function Main() {
         bgdata={bgdata}
       />
       <CardSlider />
-      <Grid container spacing={2} sx={{ minHeight: "60vh",
-        borderTop:"1px solid #d0d0d0",
-     }}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ minHeight: "60vh", borderTop: "1px solid #d0d0d0" }}
+      >
         <Grid item lg={2} md={12}>
           <SideTreeview cat={group} ct={currentcat} setct={setcurreentcat} />
         </Grid>
