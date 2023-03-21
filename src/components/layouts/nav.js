@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 
@@ -41,6 +41,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 const Nav = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [opensignup, setOpensignup] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -88,6 +89,7 @@ const Nav = () => {
         <Toolbar>
           <AssuredWorkload sx={{ color: "#333", mr: 1 }} />
           <Typography
+            onClick={() => navigate("/")}
             variant="h6"
             component="div"
             sx={{
@@ -96,6 +98,7 @@ const Nav = () => {
               textTransform: "uppercase",
               fontWeight: "bold",
               letterSpacing: "1px",
+              cursor: "pointer",
             }}
           >
             Shop
@@ -226,6 +229,7 @@ const Nav = () => {
             <Toolbar>
               <AssuredWorkload sx={{ color: "#333", mr: 1 }} />
               <Typography
+                onClick={() => navigate("/")}
                 variant="h6"
                 component="div"
                 sx={{
@@ -234,13 +238,14 @@ const Nav = () => {
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   letterSpacing: "1px",
+                  cursor: "pointer",
                 }}
               >
                 Shop
                 <span style={{ color: "#64a832" }}>Ultimate</span>
               </Typography>
               <Link
-                to="/shop"
+                to="/shops"
                 style={{
                   textDecoration: "none",
                   color: "#009f7f",

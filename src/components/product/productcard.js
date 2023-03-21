@@ -11,9 +11,10 @@ import { Grid, Paper, Stack, Rating, IconButton, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Add, Favorite, ShoppingCart, Visibility } from "@mui/icons-material";
 import { addtocart } from "../../redux/actions/cartactions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SwipeableTextMobileStepper from "../layouts/stepper";
+import { setAlert } from "../../redux/actions/alertactions";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -26,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Productcard(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const auth = useSelector((state) => state.auth.isAuthenticated);
   return (
     <Link to={`/product/${props.id}`} style={{ textDecoration: "none" }}>
       <Paper
@@ -56,7 +57,7 @@ export default function Productcard(props) {
             fontWeight: "bold",
           }}
         >
-          25%
+          {props?.discount}%
         </Box>
         <Box sx={{ minHeight: 250, display: "flex", alignItems: "center" }}>
           <img
@@ -82,45 +83,89 @@ export default function Productcard(props) {
           <Typography sx={{ fontSize: "14px", color: "#6b7280", mb: 2, mt: 1 }}>
             {props?.name}
           </Typography>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(addtocart(props.id, props.shopid));
-            }}
-            fullWidth
-            varinat="contained"
-            sx={{
-              background: "rgb(243,244,246)",
-              position: "relative",
-              textTransform: "capitalize",
-              color: "rgb(75,85,99)",
-              "&:hover": {
-                background: "rgb(0,159,127)",
-                color: "white",
-                "& .css-1lmlfqd": {
+          {auth ? (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(addtocart(props.id, props.shopid));
+              }}
+              fullWidth
+              varinat="contained"
+              sx={{
+                background: "rgb(243,244,246)",
+                position: "relative",
+                textTransform: "capitalize",
+                color: "rgb(75,85,99)",
+                "&:hover": {
                   background: "rgb(0,159,127)",
                   color: "white",
+                  "& .css-1lmlfqd": {
+                    background: "rgb(0,159,127)",
+                    color: "white",
+                  },
                 },
-              },
-            }}
-          >
-            <Typography>Add</Typography>
-            <Box
-              sx={{
-                position: "absolute",
-                display: "flex",
-                alignItems: "center",
-                right: "0",
-                justifyContent: "center",
-                width: "50px",
-                height: "100%",
-                textAlign: "center",
-                // background: "rgb(229,231,235)",
               }}
             >
-              <Add />
-            </Box>
-          </Button>
+              <Typography>Add</Typography>
+              <Box
+                sx={{
+                  position: "absolute",
+                  display: "flex",
+                  alignItems: "center",
+                  right: "0",
+                  justifyContent: "center",
+                  width: "50px",
+                  height: "100%",
+                  textAlign: "center",
+                  // background: "rgb(229,231,235)",
+                }}
+              >
+                <Add />
+              </Box>
+            </Button>
+          ) : (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  setAlert("Please login to add products to cart", "info")
+                );
+              }}
+              fullWidth
+              varinat="contained"
+              sx={{
+                background: "rgb(243,244,246)",
+                position: "relative",
+                textTransform: "capitalize",
+                color: "rgb(75,85,99)",
+                "&:hover": {
+                  background: "rgb(0,159,127)",
+                  color: "white",
+                  "& .css-1lmlfqd": {
+                    background: "rgb(0,159,127)",
+                    color: "white",
+                  },
+                },
+              }}
+            >
+              <Typography>Add</Typography>
+              <Box
+                sx={{
+                  position: "absolute",
+                  display: "flex",
+                  alignItems: "center",
+                  right: "0",
+                  justifyContent: "center",
+                  width: "50px",
+                  height: "100%",
+                  textAlign: "center",
+                  // background: "rgb(229,231,235)",
+                }}
+              >
+                <Add />
+              </Box>
+            </Button>
+          )}
         </Box>
       </Paper>
     </Link>

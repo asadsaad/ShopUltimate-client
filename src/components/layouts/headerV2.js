@@ -59,9 +59,14 @@ function AuthHeader() {
       const res = await axios.get(
         "https://shopulimate-api.onrender.com/user/becomeaseller"
       );
-      console.log(res.data);
-      dispatch(setAlert(res.data.message, "success"));
-      navigate("/become-seller");
+
+      dispatch(
+        setAlert(
+          "Seller request Added you will be informed once its approved",
+          "info"
+        )
+      );
+
       setloadings(false);
     } catch (error) {
       console.log(error);
@@ -192,6 +197,7 @@ function AuthHeader() {
               </Button>
             ) : (
               <Button
+                disabled={auth?.user?.seller_request}
                 onClick={handlesubmit}
                 sx={{
                   background: "rgb(0,159,127)",
@@ -307,25 +313,27 @@ function NAuthHeader() {
     >
       <Box sx={{ display: "flex", ml: 3 }}>
         <AssuredWorkload sx={{ color: "#333", mr: 1, mt: 0.5 }} />
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            flexGrow: 1,
-            color: "#333",
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            letterSpacing: "1px",
-          }}
-        >
-          Shop
-          <span style={{ color: "#64a832" }}>Ultimate</span>
-        </Typography>
+        <Link to="/">
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              color: "#333",
+              textTransform: "uppercase",
+              fontWeight: "bold",
+              letterSpacing: "1px",
+            }}
+          >
+            Shop
+            <span style={{ color: "#64a832" }}>Ultimate</span>
+          </Typography>
+        </Link>
       </Box>
       <Box sx={{ display: { lg: "flex", md: "flex", xs: "none" }, mr: 3 }}>
         <Stack direction="row" spacing={4}>
           <Link
-            to="shops"
+            to="/shops"
             style={{
               textDecoration: "none",
               color: "#1f2937",
@@ -335,7 +343,7 @@ function NAuthHeader() {
             Shop
           </Link>
           <Link
-            to="products"
+            to="/products"
             style={{
               textDecoration: "none",
               color: "#1f2937",
@@ -345,7 +353,7 @@ function NAuthHeader() {
             Products
           </Link>
           <Link
-            to="faq"
+            to="/faq"
             style={{
               textDecoration: "none",
               color: "#1f2937",
@@ -355,7 +363,7 @@ function NAuthHeader() {
             FAQ
           </Link>
           <Link
-            to="contact"
+            to="/contact"
             style={{
               textDecoration: "none",
               color: "#1f2937",

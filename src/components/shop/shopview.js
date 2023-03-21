@@ -235,6 +235,7 @@ export default function ShopView() {
                           price={item.price}
                           id={item._id}
                           shopid={shopdata._id}
+                          discount={item.discount}
                         />
                       ))
                     : "This Shop Has No Active Products"}

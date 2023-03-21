@@ -11,6 +11,10 @@ import {
   GET_USER_PRODUCTS,
   CLEAR_PRODUCT_IMAGE,
   PRODUCTS_BY_CATAGERY,
+  PRODUCT_ACTION_SUCCESS,
+  PROFILE_ACTION_ATTEMPT,
+  PROFILE_ACTION_SUCCESS,
+  PROFILE_ACTION_FAILED,
 } from "../types";
 import axios from "axios";
 import { setAlert } from "./alertactions";
@@ -43,8 +47,9 @@ export const getproductsbycatagery = (id) => async (dispatch) => {
       type: PRODUCTS_BY_CATAGERY,
       payload: res.data,
     });
+    dispatch({ type: PRODUCT_ACTION_SUCCESS });
   } catch (error) {
-    console.log(error);
+    dispatch({ type: PRODUCT_ACTION_FAILED });
   }
 };
 export const getuserproducts = () => async (dispatch) => {
@@ -62,6 +67,7 @@ export const getuserproducts = () => async (dispatch) => {
 };
 export const getproduct = (id) => async (dispatch) => {
   try {
+    dispatch({ type: PRODUCT_ACTION_ATTEMPT });
     const res = await axios.get(
       `https://shopulimate-api.onrender.com/product/${id}`
     );
@@ -69,8 +75,10 @@ export const getproduct = (id) => async (dispatch) => {
       type: GET_PRODUCT,
       payload: res.data,
     });
+    dispatch({ type: PRODUCT_ACTION_SUCCESS });
   } catch (error) {
     console.log(error);
+    dispatch({ type: PRODUCT_ACTION_FAILED });
   }
 };
 export const addproduct = (formData, navigate) => async (dispatch) => {

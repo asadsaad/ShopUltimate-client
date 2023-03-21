@@ -14,7 +14,16 @@ export default function Main() {
   const dispatch = useDispatch();
   const [group, setgroup] = React.useState();
   const [currentcat, setcurreentcat] = React.useState();
+  const [producttitle, setproducttitle] = useState("");
+  const products = useSelector((state) => state.products.c_products);
 
+  const filteredItems = useMemo(() => {
+    return products?.filter((item) => {
+      return item.productTitle
+        ?.toLowerCase()
+        .includes(producttitle?.toLowerCase());
+    });
+  }, [producttitle, products]);
   const catageries = useSelector((state) => state.catageries.catageries);
 
   useEffect(() => {
@@ -48,6 +57,8 @@ export default function Main() {
         ct={currentcat}
         setct={setcurreentcat}
         bgdata={bgdata}
+        producttitle={producttitle}
+        setproducttitle={setproducttitle}
       />
       <CardSlider />
       <Grid
@@ -64,6 +75,7 @@ export default function Main() {
             setgroup={setgroup}
             ct={currentcat}
             setct={setcurreentcat}
+            filteredItems={filteredItems}
           />
         </Grid>
       </Grid>

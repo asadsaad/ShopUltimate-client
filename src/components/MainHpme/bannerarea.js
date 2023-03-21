@@ -1,9 +1,18 @@
 import { Search } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import bg from "../../images/bg/electronics.jpg";
 import Header from "./header";
-export default function BannerArea({ group, setgroup, ct, setct, bgdata }) {
+export default function BannerArea({
+  group,
+  setgroup,
+  ct,
+  setct,
+  bgdata,
+  producttitle,
+  setproducttitle,
+}) {
   return (
     <>
       <Box
@@ -44,6 +53,8 @@ export default function BannerArea({ group, setgroup, ct, setct, bgdata }) {
               placeholder="Search Your Products From Here"
               fullWidth
               sx={{ background: "white", width: "100%" }}
+              value={producttitle}
+              onChange={(e) => setproducttitle(e.target.value)}
             />
             <Button
               startIcon={<Search />}

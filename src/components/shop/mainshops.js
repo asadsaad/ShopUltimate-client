@@ -104,7 +104,6 @@ export default function ShopHome() {
       <HeaderV2 />
 
       <Container sx={{ mt: 8 }}>
-        
         <Box sx={{ mb: 2 }}>
           <Typography
             sx={{ fontSize: "32px", textAlign: "center", color: "#333" }}
@@ -125,35 +124,34 @@ export default function ShopHome() {
             handlefilter={handlefilter}
           />
         </Box>
-{loading && (
+        {loading && (
           <Stack alignItems="center" sx={{ marginTop: 2, marginBottom: 2 }}>
             <CircularProgress disableShrink />
           </Stack>
         )}
         <Grid container spacing={2} sx={{ mt: 2 }}>
-
-          {shops ? (
-            // <Grid container spacing={2}>
-            filteredItems.map((item) => (
-              <Shopcard
-                key={item._id}
-                name={item.shopname}
-                streetaddress={item.streetaddress}
-                image={
-                  item.shopavatar.length > 0 ? item.shopavatar[0] : nopreview
-                }
-                country={item.country && item.country}
-                city={item.city && item.city}
-                // owner={item.owner.username}
-                id={item._id}
-              />
-            ))
-          ) : (
-            // </Grid>
-            !loading && <Typography sx={{ p: 2, textAlign: "center" }}>
-              No Shops Available
-            </Typography>
-          )}
+          {shops
+            ? // <Grid container spacing={2}>
+              filteredItems.map((item) => (
+                <Shopcard
+                  key={item._id}
+                  name={item.shopname}
+                  streetaddress={item.streetaddress}
+                  image={
+                    item.shopavatar.length > 0 ? item.shopavatar[0] : nopreview
+                  }
+                  country={item.country && item.country}
+                  city={item.city && item.city}
+                  // owner={item.owner.username}
+                  id={item._id}
+                />
+              ))
+            : // </Grid>
+              !loading && (
+                <Typography sx={{ p: 2, textAlign: "center" }}>
+                  No Shops Available
+                </Typography>
+              )}
         </Grid>
         {filteredItems?.length == 0 && (
           <>

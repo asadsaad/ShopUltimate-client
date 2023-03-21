@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Paper, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import demo from "../../images/productdemo.webp";
 import { Add } from "@mui/icons-material";
 import MobileSide from "./mobileside";
@@ -8,29 +15,40 @@ import { getproductsbycatagery } from "../../redux/actions/productactions";
 import notfound from "../../images/notfound.svg";
 import Productcard from "../product/productcard";
 
-export default function ProductGrid({ group, setgroup, ct, setct }) {
+export default function ProductGrid({
+  group,
+  setgroup,
+  ct,
+  setct,
+  filteredItems,
+}) {
   const dispatch = useDispatch();
 
   // useEffect(() => {
   //   dispatch(getproductsbycatagery(group?._id));
   // }, [group]);
   const products = useSelector((state) => state.products.c_products);
+  const loading = useSelector((state) => state.products.isLoadingp);
+
   return (
     <Box sx={{ background: "rgba(243,244,246,0.7)" }}>
       <MobileSide setgroup={setgroup} setct={setct} group={group} />
-
-      <Grid container spacing={2} sx={{ p: 3 }}>
-        {products.length ? (
-          products.map((p) => (
-            <Grid item lg={3} md={3} xs={12} sm={6}>
-              <Productcard
-                key={p._id}
-                name={p.productTitle}
-                image={p.images && p.images}
-                price={p.price}
-                id={p._id}
-              />
-              {/* <Paper
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={2} sx={{ p: 3 }}>
+          {filteredItems?.length ? (
+            filteredItems?.map((p) => (
+              <Grid item lg={3} md={3} xs={12} sm={6}>
+                <Productcard
+                  key={p._id}
+                  name={p.productTitle}
+                  image={p.images && p.images}
+                  price={p.price}
+                  id={p._id}
+                  discount={p.discount}
+                />
+                {/* <Paper
                 sx={{
                   p: 2,
                   boxShadow: "0",
@@ -97,34 +115,35 @@ export default function ProductGrid({ group, setgroup, ct, setct }) {
                   </Button>
                 </Box>
               </Paper> */}
-            </Grid>
-          ))
-        ) : (
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              pb: 5,
-            }}
-          >
-            <img
-              src={notfound}
-              style={{
-                width: 300,
-                // display: "block",
-                margin: "10px auto",
-                maxWidth: "100%",
+              </Grid>
+            ))
+          ) : (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                pb: 5,
               }}
-            />
-            <Typography sx={{ color: "#333", fontWeight: "bold", mt: 1 }}>
-              No Products In this catagery{" "}
-            </Typography>
-          </Box>
-        )}
-      </Grid>
+            >
+              <img
+                src={notfound}
+                style={{
+                  width: 300,
+                  // display: "block",
+                  margin: "10px auto",
+                  maxWidth: "100%",
+                }}
+              />
+              <Typography sx={{ color: "#333", fontWeight: "bold", mt: 1 }}>
+                No Products In this catagery{" "}
+              </Typography>
+            </Box>
+          )}
+        </Grid>
+      )}
     </Box>
   );
 }

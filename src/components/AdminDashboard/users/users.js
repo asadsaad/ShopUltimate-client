@@ -38,6 +38,8 @@ import {
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { getallusers } from "../../../redux/actions/authactions";
 import UserActions from "./useractions";
+import axios from "axios";
+import { setAlert } from "../../../redux/actions/alertactions";
 // import Orderactions from "./orderactions";
 
 export default function UsersAdmin() {
@@ -46,7 +48,7 @@ export default function UsersAdmin() {
   const [shopaddopen, setshopaddOpen] = useState(false);
 
   const [currentshop, setcurrentshop] = useState();
-
+  const [loading, setloading] = useState(false);
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.auth.users);
@@ -55,6 +57,31 @@ export default function UsersAdmin() {
   useEffect(() => {
     dispatch(getallusers());
   }, []);
+  const handlesubmit = async (e, id) => {
+    e.preventDefault();
+
+    setloading(true);
+    try {
+      const res = await axios.post(
+        "https://shopulimate-api.onrender.com/user/sellerconfirm",
+        {
+          id,
+        }
+      );
+      console.log(res.data);
+      dispatch(setAlert("Seller Approved", "success"));
+      dispatch(getallusers());
+      // dispatch({ type: SELLER_CONFIRM, payload: res?.data?.user_ });
+      // if (res.data.user_) {
+      //   navigate("/manage");
+      // }
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+      // dispatch(setAlert(error.response.data.message, "error"));
+      setloading(false);
+    }
+  };
   const columns = useMemo(
     () => [
       {
@@ -99,6 +126,34 @@ export default function UsersAdmin() {
               color: params.row.role === "seller" ? "rgb(51, 208, 103)" : null,
             }}
           />
+        ),
+      },
+      {
+        field: "seller_request",
+        headerName: "Seller Request",
+        width: 150,
+        renderCell: (params) => (
+          <>
+            {params?.row?.seller_request ? (
+              <Button
+                disabled={params?.row.role == "seller"}
+                variant="contained"
+                size="small"
+                onClick={(e) => handlesubmit(e, params?.row._id)}
+              >
+                Approve
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="success"
+                size="small"
+                sx={{ textTransform: "capitalize" }}
+              >
+                No Request
+              </Button>
+            )}
+          </>
         ),
       },
 

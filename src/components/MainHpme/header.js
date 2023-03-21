@@ -82,10 +82,14 @@ export default function Header({ group, setgroup, ct, setct }) {
       const res = await axios.get(
         "https://shopulimate-api.onrender.com/user/becomeaseller"
       );
-      console.log(res.data);
-      dispatch(setAlert(res.data.message, "success"));
+      dispatch(
+        setAlert(
+          "Seller Request Added You will inform once its approved",
+          "info"
+        )
+      );
       setloadings(false);
-      navigate("become-seller");
+      // navigate("become-seller");
     } catch (error) {
       console.log(error);
       setloadings(false);
@@ -334,6 +338,7 @@ export default function Header({ group, setgroup, ct, setct }) {
                     </Button>
                   ) : (
                     <Button
+                      disabled={auth?.user?.seller_request}
                       onClick={handlesubmit}
                       sx={{
                         background: "rgb(0,159,127)",

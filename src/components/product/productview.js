@@ -24,6 +24,7 @@ import {
 
 import CircularProgress from "@mui/material/CircularProgress";
 import HeaderV2 from "../layouts/headerV2";
+import { setAlert } from "../../redux/actions/alertactions";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,6 +67,7 @@ export default function ProductView() {
   const loading = useSelector((state) => state.products.isLoadingp);
 
   const product = useSelector((state) => state.products.product);
+  const auth = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     // dispatch({ type: SHOP_ACTION_ATTEMPT });
@@ -92,6 +94,10 @@ export default function ProductView() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  if (loading) {
+    return <CircularProgress />;
+  }
   return (
     <div>
       <HeaderV2 />
@@ -184,24 +190,49 @@ export default function ProductView() {
                 >
                   ${product && product.price}
                 </Typography>
-
-                <Button
-                  size="large"
-                  sx={{
-                    // marginTop: 2,
-                    background: "rgb(0,159,127)",
-                    boxShadow: "0",
-                    "&:hover": {
+                {auth ? (
+                  <Button
+                    size="large"
+                    sx={{
+                      // marginTop: 2,
                       background: "rgb(0,159,127)",
                       boxShadow: "0",
-                    },
-                  }}
-                  variant="contained"
-                  startIcon={<ShoppingCart />}
-                  onClick={() => dispatch(addtocart(product._id,product?.shop?._id))}
-                >
-                  Add To Cart
-                </Button>
+                      "&:hover": {
+                        background: "rgb(0,159,127)",
+                        boxShadow: "0",
+                      },
+                    }}
+                    variant="contained"
+                    startIcon={<ShoppingCart />}
+                    onClick={() =>
+                      dispatch(addtocart(product._id, product?.shop?._id))
+                    }
+                  >
+                    Add To Cart
+                  </Button>
+                ) : (
+                  <Button
+                    size="large"
+                    sx={{
+                      // marginTop: 2,
+                      background: "rgb(0,159,127)",
+                      boxShadow: "0",
+                      "&:hover": {
+                        background: "rgb(0,159,127)",
+                        boxShadow: "0",
+                      },
+                    }}
+                    variant="contained"
+                    startIcon={<ShoppingCart />}
+                    onClick={() =>
+                      dispatch(
+                        setAlert("Please login to add product to cart", "info")
+                      )
+                    }
+                  >
+                    Add To Cart
+                  </Button>
+                )}
               </Box>
               <Box sx={{ p: 2 }}>
                 <Box
