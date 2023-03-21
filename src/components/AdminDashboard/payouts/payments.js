@@ -45,6 +45,19 @@ export default function PaymentsAdmin() {
   useEffect(() => {
     getpayments();
   }, []);
+  const clearpayments = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(
+        "https://shopulimate-api.onrender.com/order/clearpayments"
+      );
+      console.log(res.data);
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+      setloading(false);
+    }
+  };
   // const availableamount = 0;
   // const calculate = payments?.map((p) =>
   //   p.status == "completed" ? (availableamount += p.amount) : null
@@ -141,7 +154,7 @@ export default function PaymentsAdmin() {
       >
         <Typography variant="h6">Earnings</Typography>
         <Typography variant="h6">
-          <Button variant="contained" sx={{ ml: 1 }}>
+          <Button variant="contained" sx={{ ml: 1 }} onClick={clearpayments}>
             Clear Todays Payments
             {/* ${availableamount} */}
           </Button>

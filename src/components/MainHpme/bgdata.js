@@ -48,21 +48,21 @@ const data = [
     name: "Health and Beauty",
   },
   {
-    heading: "Lets make your health better",
+    heading: "Lets travel around in the world",
     subheading: "Deliver products to your door step in 30mints",
-    img: "https://demo.codezeel.com/prestashop/PRS18/PRS180440/modules/cz_imageslider/views/img/sample-1.jpg",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVLf5_IPtZjov3sB5DpaOVAO96YfUIRGYLkCckWwHU-bqIb4yQeShm3Ewl7UU6nquBZM4&usqp=CAU",
     name: "Vehicles & Parts",
   },
   {
     heading: "Lets make your health better",
     subheading: "Deliver products to your door step in 30mints",
-    img: "https://demo.codezeel.com/prestashop/PRS18/PRS180440/modules/cz_imageslider/views/img/sample-1.jpg",
+    img: "https://media.istockphoto.com/id/1136317340/photo/close-up-of-sport-balls-and-equipment.jpg?s=612x612&w=0&k=20&c=JwsgygpYwBWEEUYyWfEYHsYf8bZgZdbFL_wXNpAcXhs=",
     name: "Sports & Goods",
   },
   {
-    heading: "Lets make your health better",
-    subheading: "Deliver products to your door step in 30mints",
-    img: "https://demo.codezeel.com/prestashop/PRS18/PRS180440/modules/cz_imageslider/views/img/sample-1.jpg",
+    heading: "Lets make your life better",
+    subheading: "Lets get pean in life",
+    img: "https://images.pexels.com/photos/236358/pexels-photo-236358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     name: "Religious & Ceremonial",
   },
 ];

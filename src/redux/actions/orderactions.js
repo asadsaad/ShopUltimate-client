@@ -134,7 +134,8 @@ export const updateorder = (formData, id, navigate) => async (dispatch) => {
 
     navigate("/dashboard/my-orders");
   } catch (error) {
-    dispatch({ type: OrderActionAttempt });
+    dispatch({ type: OrderActionFailed });
+    dispatch(setAlert("Something went worng", "error"));
 
     console.log(error);
   }

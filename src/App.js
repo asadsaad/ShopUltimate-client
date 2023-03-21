@@ -48,6 +48,8 @@ import AddressList from "./components/userdashboard/AddressList";
 import AddAddress from "./components/userdashboard/AddAddress";
 import BecomeSeller from "./components/auth/becomeaseller";
 import CustomRoute from "./components/auth/customroute";
+import CustomizedAccordions from "./components/MainHpme/FAQ";
+import Contact from "./components/MainHpme/contact";
 // import SellerDashboard from "./components/SellerDashboard.js/maindashboard";
 
 if (localStorage.token) {
@@ -74,6 +76,9 @@ class App extends Component {
             <Alert open={true} />
             <Routes>
               <Route path="" element={<Main />} />
+              <Route path="/faq" element={<CustomizedAccordions />} />
+              <Route path="/contact" element={<Contact />} />
+
               {/* <Route path="Seller-Dashboard" element={<SellerDashboard />} /> */}
               {/* <Route path="payment" element={<UserPayment />} /> */}
 
@@ -131,8 +136,17 @@ class App extends Component {
               </Route>
               <Route
                 path="/manage/*"
-                element={<PrivateRoute component={AdminDashboard} />}
-              ></Route>
+                element={
+                  <CustomRoute roles={["admin"]}>
+                    <AdminDashboard />
+                  </CustomRoute>
+                }
+              >
+                {/* <Route path="products" element={<Products />} />
+              <Route path="shops" element={<Shops />} />
+              <Route path="create-shop" element={<Addshop />} /> */}
+              </Route>
+
               <Route path="products" element={<Products />} />
               <Route path="/shop/:id" element={<ShopView />} />
               <Route path="/product/:id" element={<ProductView />} />

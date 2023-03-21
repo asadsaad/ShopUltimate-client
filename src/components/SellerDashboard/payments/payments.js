@@ -5,7 +5,6 @@ import axios from "axios";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
 import { Done, Close, Refresh } from "@mui/icons-material";
-
 import {
   Box,
   Container,
@@ -17,14 +16,19 @@ import {
   Stack,
   CircularProgress,
   Chip,
+  Backdrop,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { setAlert } from "../../../redux/actions/alertactions";
 
 // import Orderactions from "./orderactions";
 
 export default function Payouts() {
+  const dispatch = useDispatch();
   const [loading, setloading] = useState(false);
-  const [payments, setpayments] = useState(false);
+  const [loading1, setloading1] = useState(false);
+
+  const [payments, setpayments] = useState([]);
 
   const auth = useSelector((state) => state.auth);
   const orders = useSelector((state) => state.orders);
@@ -45,6 +49,23 @@ export default function Payouts() {
   useEffect(() => {
     getpayments();
   }, []);
+  const handletransfer = async (e) => {
+    e.preventDefault();
+    try {
+      setloading1(true);
+      const res = await axios.get(
+        "https://shopulimate-api.onrender.com/order/transferfunds"
+      );
+      getpayments();
+      setloading1(false);
+      dispatch(setAlert("Balnce Transfer Success", "success"));
+    } catch (error) {
+      console.log(error);
+      dispatch(setAlert("Something went wrong", "error"));
+
+      setloading1(false);
+    }
+  };
   // const availableamount = 0;
   // const calculate = payments?.map((p) =>
   //   p.status == "completed" ? (availableamount += p.amount) : null
@@ -131,6 +152,14 @@ export default function Payouts() {
 
   return (
     <Container sx={{}} maxWidth="xl">
+      {loading1 && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -141,8 +170,12 @@ export default function Payouts() {
       >
         <Typography variant="h6">Earnings</Typography>
         <Typography variant="h6">
-          Balance :
-          <Button variant="contained" sx={{ ml: 1 }}>
+          Balance : $
+          {payments?.reduce(
+            (a, b) => (b?.status == "available" ? (a += b?.amount) : (a += 0)),
+            0
+          )}
+          <Button variant="contained" sx={{ ml: 1 }} onClick={handletransfer}>
             withdraw
             {/* ${availableamount} */}
           </Button>
